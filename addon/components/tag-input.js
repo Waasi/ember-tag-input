@@ -28,6 +28,8 @@ export default Component.extend({
 
   allowSpacesInTags: false,
 
+  allowCommasInTags: false,
+
   showRemoveButtons: true,
 
   readOnly: false,
@@ -75,6 +77,7 @@ export default Component.extend({
   _onInputKeyDown(e) {
     if (!this.readOnly) {
       const allowSpacesInTags = this.get('allowSpacesInTags');
+      const allowSpacesInTags = this.get('allowCommasInTags');
       const tags = this.get('tags');
       const backspaceRegex = new RegExp(String.fromCharCode(KEY_CODES.BACKSPACE), 'g');
       const newTag = e.target.value.trim().replace(backspaceRegex, '');
@@ -96,7 +99,7 @@ export default Component.extend({
           removeTagAtIndex(tags.length - 1);
         }
       } else {
-        if (e.which === KEY_CODES.COMMA || (!allowSpacesInTags && e.which === KEY_CODES.SPACE) || e.which === KEY_CODES.ENTER) {
+        if ((!allowCommasInTags && e.which === KEY_CODES.COMMA) || (!allowSpacesInTags && e.which === KEY_CODES.SPACE) || e.which === KEY_CODES.ENTER) {
           if (newTag.length > 0) {
             if (this.addNewTag(newTag)) {
               e.target.value = '';
